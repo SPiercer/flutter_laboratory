@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_laboratory/src/modules/connect/controller/connect_provider.dart';
 import 'package:flutter_laboratory/src/shared/utils/constants/strings.dart'
     as constants;
+import 'package:go_router/go_router.dart';
 
 class ConnectScreen extends StatelessWidget {
   const ConnectScreen({super.key});
@@ -17,7 +18,30 @@ class ConnectScreen extends StatelessWidget {
         ),
       ),
       body: BlocConsumer<ConnectProvider, ConnectState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          switch (state) {
+            case ConnectState.connected:
+              return context.go('/');
+            case ConnectState.error:
+              context.pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'An error occurred while connecting to the VM service.',
+                  ),
+                ),
+              );
+              return;
+            case ConnectState.connecting:
+              showDialog(
+                context: context,
+                builder: (context) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            default:
+          }
+        },
         builder: (context, state) {
           final provider = context.watch<ConnectProvider>();
           return Form(

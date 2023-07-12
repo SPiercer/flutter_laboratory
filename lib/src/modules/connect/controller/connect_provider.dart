@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_laboratory/src/shared/service/vm_service.dart';
 
 part 'connect_state.dart';
 
@@ -12,12 +13,16 @@ class ConnectProvider extends Cubit<ConnectState> {
 
   void setHost(String? host) => this.host = host;
 
-  Future<void> connect([String? host]) async {
+  Future<void> connect([_]) async {
     if (formKey.currentState == null) return;
     if (formKey.currentState!.validate()) {
       emit(ConnectState.connecting);
-      await Future.delayed(const Duration(seconds: 2));
-      emit(ConnectState.connected);
+      try {
+        await AppVMService.i.initialize(host!);
+        emit(ConnectState.connected);
+      } catch (e) {
+        emit(ConnectState.error);
+      }
     }
   }
 }
