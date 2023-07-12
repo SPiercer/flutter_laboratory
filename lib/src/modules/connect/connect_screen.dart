@@ -19,15 +19,27 @@ class ConnectScreen extends StatelessWidget {
       ),
       body: BlocConsumer<ConnectProvider, ConnectState>(
         listener: (context, state) {
+          final provider = context.read<ConnectProvider>();
+
           switch (state) {
             case ConnectState.connected:
               return context.go('/');
             case ConnectState.error:
               context.pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'An error occurred while connecting to the VM service.',
+                SnackBar(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'An error occurred while connecting to the VM service.',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        provider.error.toString(),
+                      ),
+                    ],
                   ),
                 ),
               );
