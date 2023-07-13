@@ -16,6 +16,12 @@ class MainScreen extends StatelessWidget {
           SizedBox(
             width: 300,
             child: Drawer(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.zero,
+                  bottomRight: Radius.zero,
+                ),
+              ),
               child: ListView(
                 children: [
                   const MainVMHeader(),
@@ -34,9 +40,9 @@ class MainScreen extends StatelessWidget {
                     onTap: () => context.push('/logging'),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.list),
-                    title: const Text('Logs'),
-                    onTap: () => context.push('/logging'),
+                    leading: const Icon(Icons.network_check),
+                    title: const Text('Network'),
+                    onTap: () => context.push('/network'),
                   ),
                 ],
               ),

@@ -19,6 +19,7 @@ class AppVMService {
   /// the list of events that are being actively listened to
   final listenedEvents = <String>{};
 
+  /// the flag that indicates if the vm service is initialized or not
   bool isInitialized = false;
 
   /// the `init` connects to the vm service and gets the dart vm and main isolate
@@ -74,6 +75,7 @@ class AppVMService {
   /// (EventStreams.kLogging) or (EventStreams.kStdout);
   /// ```
   Future<void> streamCancel(String streamId) async {
+    if (!listenedEvents.contains(streamId)) return; // not listening
     listenedEvents.remove(streamId);
     await vmService.streamCancel(streamId);
   }

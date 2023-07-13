@@ -13,7 +13,7 @@ class ConnectScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'DevTools+ for Flutter and Dart',
+          'Laboratory for Flutter and Dart',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

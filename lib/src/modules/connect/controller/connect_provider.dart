@@ -31,9 +31,11 @@ class ConnectProvider extends Cubit<ConnectState> {
               .replaceAll('=/', '=/ws');
         }
         await AppVMService.i.initialize(host!);
+
         emit(ConnectState.connected);
-      } catch (e) {
+      } catch (e, st) {
         error = e;
+        log(e.toString(), stackTrace: st);
         emit(ConnectState.error);
       }
     }

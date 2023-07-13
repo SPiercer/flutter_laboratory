@@ -10,9 +10,7 @@ class MainRoute extends StatefulShellRoute {
           branches: [LoggingRoute()],
           builder: (context, state, child) => BlocProvider(
             create: (context) => MainProvider(),
-            child: MainScreen(
-              child: child,
-            ),
+            child: MainScreen(child: child),
           ),
         );
 }
